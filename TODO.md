@@ -1,8 +1,8 @@
 # TODO
 
 - Github automation
-  - deploy to Github page
-  - deploy to itch.io
+  - ~~deploy to Github page~~
+  - ~~deploy to itch.io~~
   - Build rust plugin
 - Strategy/board game template
   - undo / redo

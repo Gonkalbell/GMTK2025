@@ -56,6 +56,11 @@ jobs:
         with:
           name: Windows
           path: /home/runner/.local/share/godot/archives/Windows.zip
+      - name: Deploy to GitHub Pages 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v4
+        with:
+          branch: gh-pages
+          folder: /home/runner/.local/share/godot/builds/HTML5
 
   deploy-to-itchio-linux:
     runs-on: ubuntu-latest
