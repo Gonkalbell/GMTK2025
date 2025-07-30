@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GMTK2025"
-run/main_scene="res://scenes/boot/godot/godot_bootsplash_scene.tscn"
+run/main_scene="uid://dv2y18ye8j7o0"
 config/features=PackedStringArray("4.4")
 config/icon="res://icon.svg"
 
@@ -27,6 +27,11 @@ window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_height"
+
+[editor]
+
+version_control/plugin_name="GitPlugin"
+version_control/autoload_on_startup=true
 
 [gui]
 
