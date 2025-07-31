@@ -21,9 +21,13 @@ speed = 0.1
 [node name="CameraTarget" type="Node3D" parent="Coaster"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.608898, 0, -3.23362)
 
+[node name="TailStart" type="Node3D" parent="Coaster"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.65)
+
 [node name="Path3D" type="Path3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.525924)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.65)
 curve = SubResource("Curve3D_dqkch")
 
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="Path3D"]

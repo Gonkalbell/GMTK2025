@@ -52,4 +52,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.81194, -4.76837e-07, -0.06
 [node name="Player" parent="." instance=ExtResource("7_vus8m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.525924)
 
-[editable path="Player"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.90281, 0, 0)

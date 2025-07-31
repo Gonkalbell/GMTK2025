@@ -3,6 +3,7 @@ extends Node3D
 @export var speed: float = 0.25
 @export var turns_per_sec:float = 0.5
 @onready var path: Path3D = %Path3D
+@onready var tail_start: Node3D = %TailStart
 
 func _process(delta: float) -> void:
 	var yaw = Input.get_axis("move_right", "move_left")
@@ -10,7 +11,7 @@ func _process(delta: float) -> void:
 	translate_object_local(Vector3.FORWARD * speed)
 	var curve = path.curve
 	if curve.point_count > 0:
-		curve.set_point_position(curve.point_count - 1, global_position)
+		curve.set_point_position(curve.point_count - 1, tail_start.global_position)
 
 func _on_timer_timeout() -> void:
 	var curve = path.curve
@@ -25,4 +26,4 @@ func _on_timer_timeout() -> void:
 			curve.set_point_count(intersection_index)
 			curve.add_point(intersection["point"])
 			DebugDraw3D.draw_line_path(loop_points, Color.MAGENTA, 1)
-	path.curve.add_point(global_position)
+	path.curve.add_point(tail_start.global_position)
