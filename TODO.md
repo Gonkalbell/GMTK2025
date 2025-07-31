@@ -1,7 +1,25 @@
 # TODO
 
-- Detect when splines form a loop
+- ~~Detect when splines form a loop~~
 - Enemies / goals to loop around
 - use https://docs.godotengine.org/en/4.4/classes/class_meshdatatool.html#class-meshdatatool to deform coaster-steel-straigt.glm (or coaster-steeltrack.glm)
 - reorganize .glb files in coaster-kit into subdirectories, but find out how to fix up their texture references after moving them
-
+- Game Manager:
+  - Time limit
+  - Looping Green "O"s increases your time. Time increase is nonlinear (probably triangular numbers) to encourage big combos
+  - Looping Red "X"s invalidates the loop. Maybe also have a time penalty?
+  - More "X"s appear over time
+  - Spawn "O"s so you can always make a combo, but never have so many that you can set the timer over some threshold with a big combo.
+- UI:
+  - Show time and score
+- Game world
+  - Switch from plane to moving around sphere
+  - Possibly have faint X-Ray vision?
+  - delete end of tail so it's impossible to "bisect" the world. i.e tail length should always be < sphere circumference
+  - maybe make the sphere slowly grow over time?
+- Actually decent art / polish
+  - tron / geometry wars low-poly aestetic?
+  - techno music
+  - sfx for
+    - X and O spawning
+    - completeing loops
