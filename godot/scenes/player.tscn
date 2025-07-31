@@ -1,0 +1,55 @@
+[gd_scene load_steps=5 format=3 uid="uid://bemaa4slumja3"]
+
+[ext_resource type="PackedScene" uid="uid://cqnk8emcgu6wd" path="res://coaster-kit/coaster-train-front.glb" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://dj532gayoo5ja" path="res://scenes/player.gd" id="1_g2els"]
+[ext_resource type="Script" uid="uid://dt41a4sumqdl8" path="res://scenes/camera_follow.gd" id="3_qhqgy"]
+
+[sub_resource type="Curve3D" id="Curve3D_dqkch"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.01),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[node name="Player" type="Node3D"]
+
+[node name="Coaster" parent="." instance=ExtResource("1_3vyb7")]
+unique_name_in_owner = true
+script = ExtResource("1_g2els")
+
+[node name="CameraTarget" type="Node3D" parent="Coaster"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.608898, 0, -3.23362)
+
+[node name="Path3D" type="Path3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.525924)
+curve = SubResource("Curve3D_dqkch")
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Path3D"]
+polygon = PackedVector2Array(-0.5, -0.5, -0.507999, 0.0157447, 0.507674, -0.00679596, 0.5, -0.5)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 2.0
+path_simplify_angle = 3.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="CameraOrigin" type="Node3D" parent="." node_paths=PackedStringArray("follow_target")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.525924)
+script = ExtResource("3_qhqgy")
+follow_target = NodePath("../Coaster/CameraTarget")
+
+[node name="Camera3D" type="Camera3D" parent="CameraOrigin"]
+transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0.609, 5, 5)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[connection signal="timeout" from="Timer" to="Coaster" method="_on_timer_timeout"]

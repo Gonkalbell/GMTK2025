@@ -1,12 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://cik30de5gaaah"]
+[gd_scene load_steps=10 format=3 uid="uid://cik30de5gaaah"]
 
 [ext_resource type="Script" uid="uid://ovjegpk30m4h" path="res://scenes/ingame_scene.gd" id="1_objyc"]
 [ext_resource type="PackedScene" uid="uid://bkk87o2ooo6at" path="res://ui/overlays/fade_overlay.tscn" id="1_y6ebv"]
 [ext_resource type="PackedScene" uid="uid://jyv4g54adkmo" path="res://ui/overlays/pause_overlay.tscn" id="3_8o178"]
-[ext_resource type="PackedScene" uid="uid://cqnk8emcgu6wd" path="res://coaster-kit/coaster-train-front.glb" id="4_2577t"]
-[ext_resource type="Script" uid="uid://dj532gayoo5ja" path="res://scenes/player.gd" id="5_gadrd"]
-[ext_resource type="Script" uid="uid://dt41a4sumqdl8" path="res://scenes/camera_follow.gd" id="6_gadrd"]
 [ext_resource type="PackedScene" uid="uid://vqm2q88kd5y4" path="res://coaster-kit/bench.glb" id="7_5jhce"]
+[ext_resource type="PackedScene" uid="uid://bemaa4slumja3" path="res://scenes/player.tscn" id="7_vus8m"]
 [ext_resource type="PackedScene" uid="uid://ekrtf11bobsa" path="res://coaster-kit/tree-large.glb" id="8_vus8m"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2577t"]
@@ -45,22 +43,13 @@ unique_name_in_owner = true
 process_mode = 2
 visible = false
 
-[node name="Player" parent="." instance=ExtResource("4_2577t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.608898, 0, 0.766379)
-script = ExtResource("5_gadrd")
-
-[node name="CameraTarget" type="Node3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
-
-[node name="CameraOrigin" type="Node3D" parent="." node_paths=PackedStringArray("follow_target")]
-script = ExtResource("6_gadrd")
-follow_target = NodePath("../Player/CameraTarget")
-
-[node name="Camera3D" type="Camera3D" parent="CameraOrigin"]
-transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0.609, 5, 5)
-
 [node name="bench2" parent="." instance=ExtResource("7_5jhce")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.58848)
 
 [node name="tree-large2" parent="." instance=ExtResource("8_vus8m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.81194, -4.76837e-07, -0.0670462)
+
+[node name="Player" parent="." instance=ExtResource("7_vus8m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.525924)
+
+[editable path="Player"]
