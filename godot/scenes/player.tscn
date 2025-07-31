@@ -16,6 +16,7 @@ point_count = 2
 [node name="Coaster" parent="." instance=ExtResource("1_3vyb7")]
 unique_name_in_owner = true
 script = ExtResource("1_g2els")
+speed = 0.1
 
 [node name="CameraTarget" type="Node3D" parent="Coaster"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.608898, 0, -3.23362)

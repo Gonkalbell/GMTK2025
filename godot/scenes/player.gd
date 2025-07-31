@@ -14,5 +14,15 @@ func _process(delta: float) -> void:
 
 func _on_timer_timeout() -> void:
 	var curve = path.curve
+	# Detect if our path made a loop
+	if curve.point_count > 1:
+		var points = curve.tessellate_even_length(5, 2)
+		var old_points = points.slice(0, -2)
+		var intersection = Util.segment_curve_intersect3d(points[-1], points[-2], old_points)
+		if intersection != null:
+			var intersection_index = intersection["index"]
+			var loop_points = points.slice(intersection_index)
+			curve.set_point_count(intersection_index)
+			curve.add_point(intersection["point"])
+			DebugDraw3D.draw_line_path(loop_points, Color.MAGENTA, 1)
 	path.curve.add_point(global_position)
-	
