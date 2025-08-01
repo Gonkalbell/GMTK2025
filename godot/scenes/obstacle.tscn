@@ -1,10 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://p55tqrw6nwjl"]
+[gd_scene load_steps=2 format=3 uid="uid://p55tqrw6nwjl"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p1s84"]
-albedo_color = Color(1, 0, 0, 1)
+[ext_resource type="PackedScene" uid="uid://cplbmod3pvp67" path="res://coaster-kit/trash.glb" id="1_7ukg5"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_pg2rt"]
-material = SubResource("StandardMaterial3D_p1s84")
+[node name="Obstacle" type="Node3D" groups=["Obstacle"]]
 
-[node name="Obstacle" type="MeshInstance3D" groups=["Obstacle"]]
-mesh = SubResource("BoxMesh_pg2rt")
+[node name="trash2" parent="." instance=ExtResource("1_7ukg5")]

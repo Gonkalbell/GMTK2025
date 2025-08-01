@@ -37,9 +37,9 @@ func spawn_obstacle():
 		var instance: Node3D = obstacle_scene.instantiate()
 		get_tree().root.add_child(instance)
 		instance.global_position = random_pos
+		instance.global_basis = get_arbitrary_basis(random_pos)
 		obstacle_map[random_pos] = instance
 		break
-
 
 func spawn_pickup():
 	var instance: Node3D = pickup_scene.instantiate()
@@ -54,7 +54,16 @@ func place_pickup(pickup: Node3D):
 		obstacle.queue_free()
 		obstacle_map.erase(random_pos)
 	pickup.global_position = random_pos
+	pickup.global_basis = get_arbitrary_basis(random_pos)
 	pickup_map[random_pos] = pickup
+
+func get_arbitrary_basis(pos: Vector3) -> Basis:
+	var origin: Vector3 = %Planet.global_position
+	var up_dir = (pos - origin).normalized()
+	var arbitrary_axis = Vector3.RIGHT if !up_dir.is_equal_approx(Vector3.RIGHT) else Vector3.UP
+	var tangent = up_dir.cross(arbitrary_axis).normalized()
+	var bitangent = tangent.cross(up_dir).normalized()
+	return Basis(tangent, up_dir, bitangent)
 
 func _on_player_completed_loop(points: PackedVector3Array) -> void:
 	var origin: Vector3 = %Planet.global_position
@@ -65,8 +74,8 @@ func _on_player_completed_loop(points: PackedVector3Array) -> void:
 	average_point /= points.size()
 
 	var plane_normal = (average_point - origin).normalized()
-	var aribitrary_axis = Vector3.RIGHT if !plane_normal.is_equal_approx(Vector3.RIGHT) else Vector3.UP
-	var plane_tangent = plane_normal.cross(aribitrary_axis).normalized()
+	var arbitrary_axis = Vector3.RIGHT if !plane_normal.is_equal_approx(Vector3.RIGHT) else Vector3.UP
+	var plane_tangent = plane_normal.cross(arbitrary_axis).normalized()
 	var plane_bitangent = plane_normal.cross(plane_tangent).normalized()
 
 	var flattened_points = PackedVector2Array()

@@ -17,7 +17,7 @@ static func segment_curve_intersect3d(from: Vector3, to: Vector3, points: Packed
 
 	return null
 
-static func random_point_on_fibonacci_sphere(samples = 100) -> Vector3:
+static func random_point_on_fibonacci_sphere(samples = 200) -> Vector3:
 	const golden_angle = PI * (3 - sqrt(5))
 	var r = float(randi_range(0, samples - 1))
 	var y = lerp(-1, 1, r / samples)
