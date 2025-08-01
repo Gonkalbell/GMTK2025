@@ -3,7 +3,7 @@ extends Node3D
 var score = 0
 
 @export var obstacle_scene: PackedScene = preload("res://scenes/obstacle.tscn")
-@export var pickup_scene: PackedScene= preload("res://scenes/pickup.tscn")
+@export var pickup_scene: PackedScene = preload("res://scenes/pickup.tscn")
 
 var max_time_limit: float
 
@@ -96,6 +96,7 @@ func _on_player_completed_loop(points: PackedVector3Array) -> void:
 
 	var all_pickups = pickup_map.values()
 	var new_points = 0
+	var total_points = 0
 	for pickup in all_pickups:
 		var pos = pickup.global_position
 		var is_above_plane = pos.dot(plane_normal) >= 0
@@ -105,14 +106,23 @@ func _on_player_completed_loop(points: PackedVector3Array) -> void:
 				Notification.spawn_invalid(get_tree(), 1.1 * pos)
 			else:
 				new_points += 1
+				total_points += new_points
 				score += new_points
 				var new_time_limit = min(%TimeLimit.time_left + new_points, max_time_limit)
 				%TimeLimit.start(new_time_limit)
 				Notification.spawn_score(get_tree(), 1.1 * pos, new_points)
 				place_pickup(pickup)
 
+	if looped_any_obstacles:
+		fucked_up.emit()
+	else:
+		points_gained.emit(new_points, total_points)
 
 func _on_time_limit_timeout() -> void:
 	%FadeOverlay.fade_out()
 	await %FadeOverlay.on_complete_fade_out
 	get_tree().change_scene_to_file("res://scenes/main_menu_scene.tscn")
+
+signal points_gained(points: float, total_points: float)
+
+signal fucked_up()

@@ -2,9 +2,13 @@ extends Node3D
 
 @export var move_speed: float = 6
 @export var turn_speed: float = 0.5
+@export var bonus_speed_modifier: float = 1.0;
 ## We use this angle (in turns) to find the path's maximum arc length relative to the radius of the planet.
 @export var max_path_arc_angle: float = 0.95
 @export var planet: Node3D
+
+var speed_bonus: float = 0.0
+var speed_timer: float = 0.0
 
 signal completed_loop(points: PackedVector3Array)
 
@@ -20,10 +24,23 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	var origin: Vector3 = planet.global_position
 	var radius: float = planet.scale.x
-	var yaw_input: float = Input.get_axis("move_left", "move_right")
+	var input: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+
+	var cam: Camera3D = get_viewport().get_camera_3d()
+	var up_dir_old: Vector3 = (%Coaster.global_position - origin).normalized()
+	var forward_dir_old: Vector3 = (-%Coaster.global_basis.z).slide(up_dir_old).normalized()    
+	var view_dir: Vector2 = cam.unproject_position(%Coaster.global_position + forward_dir_old) - cam.unproject_position(%Coaster.global_position)
+	var yaw_input: float = 0
+	if input.length_squared() > 0.0:
+		yaw_input = view_dir.angle_to(input)
+
+	speed_timer -= delta;
+	if speed_timer < 0:
+		speed_bonus = 0
+		speed_timer = 0
 
 	%Coaster.rotate_object_local(Vector3.UP, TAU * -yaw_input * delta * turn_speed)
-	%Coaster.translate_object_local(Vector3.FORWARD * delta * move_speed)
+	%Coaster.translate_object_local(Vector3.FORWARD * delta * (move_speed + speed_bonus * bonus_speed_modifier))
 
 	var up_dir: Vector3 = (%Coaster.global_position - origin).normalized()
 	var forward_dir: Vector3 = (-%Coaster.global_basis.z).slide(up_dir).normalized()
@@ -60,3 +77,12 @@ func _on_new_path_point_timer_timeout() -> void:
 	curve.add_point(%TailStart.global_position)
 	while curve.get_baked_length() > max_path_arc_angle * TAU * radius:
 		curve.remove_point(0)
+
+
+func _on_game_manager_points_gained(points: float, total_points: float) -> void:
+	speed_bonus += points
+	speed_timer += total_points
+
+func _on_game_manager_fucked_up() -> void:
+	speed_bonus = 0
+	speed_timer = 0

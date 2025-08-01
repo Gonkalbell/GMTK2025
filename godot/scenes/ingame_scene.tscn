@@ -85,5 +85,7 @@ wait_time = 5.0
 autostart = true
 
 [connection signal="completed_loop" from="Player" to="GameManager" method="_on_player_completed_loop"]
+[connection signal="fucked_up" from="GameManager" to="Player" method="_on_game_manager_fucked_up"]
+[connection signal="points_gained" from="GameManager" to="Player" method="_on_game_manager_points_gained"]
 [connection signal="timeout" from="GameManager/TimeLimit" to="GameManager" method="_on_time_limit_timeout"]
 [connection signal="timeout" from="GameManager/SpawnTimer" to="GameManager" method="_on_spawn_timer_timeout"]
