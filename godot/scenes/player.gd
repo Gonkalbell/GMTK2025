@@ -6,6 +6,8 @@ extends Node3D
 @export var max_path_arc_angle: float = 0.95
 @export var planet: Node3D
 
+signal completed_loop(points: PackedVector3Array)
+
 func _ready() -> void:
 	%Path3D.global_transform = Transform3D.IDENTITY
 	var curve: Curve3D = %Path3D.curve
@@ -26,7 +28,7 @@ func _process(delta: float) -> void:
 	var up_dir: Vector3 = (%Coaster.global_position - origin).normalized()
 	var forward_dir: Vector3 = (-%Coaster.global_basis.z).slide(up_dir).normalized()
 	var right_dir: Vector3 = up_dir.cross(forward_dir).normalized()
-
+	
 	%Coaster.global_position = origin + up_dir * radius
 	%Coaster.global_basis = Basis(right_dir, up_dir, -forward_dir)
 
@@ -54,7 +56,7 @@ func _on_new_path_point_timer_timeout() -> void:
 			var loop_points = points.slice(intersection_index)
 			curve.set_point_count(intersection_index)
 			curve.add_point(intersection["point"])
-			DebugDraw3D.draw_line_path(loop_points, Color.MAGENTA, 1)
+			completed_loop.emit(loop_points)
 	curve.add_point(%TailStart.global_position)
 	while curve.get_baked_length() > max_path_arc_angle * TAU * radius:
 		curve.remove_point(0)

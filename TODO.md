@@ -18,6 +18,8 @@
   - maybe make the sphere slowly grow over time?
 - remove template stuff
   - i18n
+  - Save/Load
+  - combine menu scene with main scene?
 - Actually decent art / polish
   - tron / geometry wars low-poly aestetic?
   - techno music
