@@ -2,10 +2,10 @@
 
 - ~~Detect when splines form a loop~~
 - Game Manager:
-  - Time limit
-  - Looping Green "O"s increases your time. Time increase is nonlinear (probably triangular numbers) to encourage big combos
-  - Looping Red "X"s invalidates the loop. Maybe also have a time penalty?
-  - More "X"s appear over time
+  - ~~Time limit~~
+  - ~~Looping Green "O"s increases your time. Time increase is nonlinear (probably triangular numbers) to encourage big combos~~
+  - ~~Looping Red "X"s invalidates the loop. Maybe also have a time penalty?~~
+  - ~~More "X"s appear over time~~
   - Spawn "O"s so you can always make a combo, but never have so many that you can set the timer over some threshold with a big combo.
 - UI:
   - ~~Show time and score~~
@@ -14,16 +14,16 @@
   - ~~Sphere controls~~
   - ~~Camera controls~~
   - Possibly have faint X-Ray vision to see objects on the other side of the planet?
-  - delete end of tail so it's impossible to "bisect" the world. i.e tail length should always be < sphere circumference
+  - ~~delete end of tail so it's impossible to "bisect" the world. i.e tail length should always be < sphere circumference~~
   - maybe make the sphere slowly grow over time?
 - remove template stuff
   - i18n
   - Save/Load
   - combine menu scene with main scene?
 - Actually decent art / polish
-  - tron / geometry wars low-poly aestetic?
+  - tron / geometry wars low-poly aesthetic?
   - techno music
   - use https://docs.godotengine.org/en/4.4/classes/class_meshdatatool.html#class-meshdatatool to deform mesh for path?
   - sfx for
     - X and O spawning
-    - completeing loops
+    - completing loops
