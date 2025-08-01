@@ -2,38 +2,47 @@ extends Node3D
 
 @export var move_speed: float = 6
 @export var turn_speed: float = 0.3
-@export var origin: Vector3 = Vector3.ZERO
-@export var radius = 10
+## We use this angle (in turns) to find the path's maximum arc length relative to the radius of the planet.
+@export var max_path_arc_angle: float = 0.95
+@export var planet: Node3D
 
 func _ready() -> void:
 	%Path3D.global_transform = Transform3D.IDENTITY
-	%Path3D.curve.clear_points()
+	var curve: Curve3D = %Path3D.curve
+	curve.clear_points()
+	# Add some initial points so we don't get errors
+	var back_dir = %TailStart.global_position - %Coaster.global_position
+	curve.add_point(%TailStart.global_position + 0.1 * back_dir)
+	curve.add_point(%TailStart.global_position)
 
 func _process(delta: float) -> void:
-	var yaw_input = Input.get_axis("move_left", "move_right")
+	var origin: Vector3 = planet.global_position
+	var radius: float = planet.scale.x
+	var yaw_input: float = Input.get_axis("move_left", "move_right")
 
-	rotate_object_local(Vector3.UP, TAU * -yaw_input * delta * turn_speed)
-	translate_object_local(Vector3.FORWARD * delta * move_speed)
+	%Coaster.rotate_object_local(Vector3.UP, TAU * -yaw_input * delta * turn_speed)
+	%Coaster.translate_object_local(Vector3.FORWARD * delta * move_speed)
 
-	var up_dir = (global_position - origin).normalized()
-	var forward_dir = (-global_basis.z).slide(up_dir).normalized()
-	var right_dir = up_dir.cross(forward_dir).normalized()
+	var up_dir: Vector3 = (%Coaster.global_position - origin).normalized()
+	var forward_dir: Vector3 = (-%Coaster.global_basis.z).slide(up_dir).normalized()
+	var right_dir: Vector3 = up_dir.cross(forward_dir).normalized()
 
-	global_position = origin + up_dir * radius
-	global_basis = Basis(right_dir, up_dir, -forward_dir)
-	
+	%Coaster.global_position = origin + up_dir * radius
+	%Coaster.global_basis = Basis(right_dir, up_dir, -forward_dir)
+
 	%CameraOrigin.global_position = %CameraTarget.global_position
 	var camera_up_dir = (%CameraOrigin.global_position - origin).normalized()
 	var camera_forward_dir = (-%CameraOrigin.global_basis.z).slide(camera_up_dir).normalized()
 	var camera_right_dir = camera_up_dir.cross(camera_forward_dir).normalized()
-	
+
 	%CameraOrigin.global_basis = Basis(camera_right_dir, camera_up_dir, -camera_forward_dir)
 
 	var curve: Curve3D = %Path3D.curve
 	if curve.point_count > 0:
 		curve.set_point_position(curve.point_count - 1, %TailStart.global_position)
 
-func _on_timer_timeout() -> void:
+func _on_new_path_point_timer_timeout() -> void:
+	var radius: float = planet.scale.x
 	var curve: Curve3D = %Path3D.curve
 	# Detect if our path made a loop
 	if curve.point_count > 1:
@@ -47,3 +56,5 @@ func _on_timer_timeout() -> void:
 			curve.add_point(intersection["point"])
 			DebugDraw3D.draw_line_path(loop_points, Color.MAGENTA, 1)
 	curve.add_point(%TailStart.global_position)
+	while curve.get_baked_length() > max_path_arc_angle * TAU * radius:
+		curve.remove_point(0)

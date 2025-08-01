@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bemaa4slumja3"]
 
 [ext_resource type="PackedScene" uid="uid://cqnk8emcgu6wd" path="res://coaster-kit/coaster-train-front.glb" id="1_3vyb7"]
-[ext_resource type="Script" uid="uid://dj532gayoo5ja" path="res://scenes/coaster.gd" id="1_g2els"]
+[ext_resource type="Script" uid="uid://dj532gayoo5ja" path="res://scenes/player.gd" id="1_g2els"]
 
 [sub_resource type="Curve3D" id="Curve3D_dqkch"]
 _data = {
@@ -11,10 +11,10 @@ _data = {
 point_count = 3
 
 [node name="Player" type="Node3D"]
+script = ExtResource("1_g2els")
 
 [node name="Coaster" parent="." instance=ExtResource("1_3vyb7")]
 unique_name_in_owner = true
-script = ExtResource("1_g2els")
 
 [node name="CameraTarget" type="Node3D" parent="Coaster"]
 unique_name_in_owner = true
@@ -52,4 +52,4 @@ unique_name_in_owner = true
 [node name="Camera" type="Camera3D" parent="CameraOrigin"]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 9, 7)
 
-[connection signal="timeout" from="Path3D/NewPathPointTimer" to="Coaster" method="_on_timer_timeout"]
+[connection signal="timeout" from="Path3D/NewPathPointTimer" to="." method="_on_new_path_point_timer_timeout"]

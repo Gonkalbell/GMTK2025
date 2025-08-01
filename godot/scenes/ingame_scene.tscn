@@ -1,11 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://cik30de5gaaah"]
+[gd_scene load_steps=11 format=3 uid="uid://cik30de5gaaah"]
 
 [ext_resource type="Script" uid="uid://ovjegpk30m4h" path="res://scenes/ingame_scene.gd" id="1_objyc"]
 [ext_resource type="PackedScene" uid="uid://bkk87o2ooo6at" path="res://ui/overlays/fade_overlay.tscn" id="1_y6ebv"]
 [ext_resource type="PackedScene" uid="uid://jyv4g54adkmo" path="res://ui/overlays/pause_overlay.tscn" id="3_8o178"]
-[ext_resource type="PackedScene" uid="uid://vqm2q88kd5y4" path="res://coaster-kit/bench.glb" id="7_5jhce"]
+[ext_resource type="Script" uid="uid://ce6yf2m8pio31" path="res://scenes/game_manager.gd" id="5_2577t"]
 [ext_resource type="PackedScene" uid="uid://bemaa4slumja3" path="res://scenes/player.tscn" id="7_vus8m"]
-[ext_resource type="PackedScene" uid="uid://ekrtf11bobsa" path="res://coaster-kit/tree-large.glb" id="8_vus8m"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2577t"]
 sky_top_color = Color(0.6, 0.8, 0.933333, 1)
@@ -51,15 +50,35 @@ unique_name_in_owner = true
 process_mode = 2
 visible = false
 
-[node name="bench2" parent="." instance=ExtResource("7_5jhce")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
+[node name="HUD" type="Label" parent="UI"]
+unique_name_in_owner = true
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 89.0
+offset_bottom = 65.0
+text = "Time: %s
+Score: %s"
 
-[node name="tree-large2" parent="." instance=ExtResource("8_vus8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.81194, -4.76837e-07, -0.0670462)
-
-[node name="Player" parent="." instance=ExtResource("7_vus8m")]
+[node name="Player" parent="." node_paths=PackedStringArray("planet") instance=ExtResource("7_vus8m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+planet = NodePath("../Planet")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Planet" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 mesh = SubResource("SphereMesh_gadrd")
+
+[node name="GameManager" type="Node3D" parent="."]
+script = ExtResource("5_2577t")
+
+[node name="TimeLimit" type="Timer" parent="GameManager"]
+unique_name_in_owner = true
+wait_time = 60.0
+one_shot = true
+autostart = true
+
+[node name="SpawnTimer" type="Timer" parent="GameManager"]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="GameManager/SpawnTimer" to="GameManager" method="_on_spawn_timer_timeout"]
