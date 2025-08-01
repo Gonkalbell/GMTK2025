@@ -1,7 +1,7 @@
 extends Node3D
 
 @export var move_speed: float = 6
-@export var turn_speed: float = 0.3
+@export var turn_speed: float = 0.5
 ## We use this angle (in turns) to find the path's maximum arc length relative to the radius of the planet.
 @export var max_path_arc_angle: float = 0.95
 @export var planet: Node3D
@@ -40,7 +40,7 @@ func _process(delta: float) -> void:
 	%CameraOrigin.global_basis = Basis(camera_right_dir, camera_up_dir, -camera_forward_dir)
 
 	var curve: Curve3D = %Path3D.curve
-	if curve.point_count > 0:
+	if curve.point_count > 2:
 		curve.set_point_position(curve.point_count - 1, %TailStart.global_position)
 
 func _on_new_path_point_timer_timeout() -> void:

@@ -23,7 +23,7 @@ func _on_spawn_timer_timeout() -> void:
 func random_point_on_planet() -> Vector3:
 	var origin: Vector3 = %Planet.global_position
 	var radius: float = %Planet.scale.x
-	return origin + radius * Util.random_on_unit_sphere()
+	return origin + radius * Util.random_point_on_fibonacci_sphere()
 
 func spawn_scene(packed_scene: PackedScene):
 	var instance: Node3D = packed_scene.instantiate()
@@ -72,6 +72,7 @@ func _on_player_completed_loop(points: PackedVector3Array) -> void:
 			else:
 				new_points += 1
 				score += new_points
-				%TimeLimit.start(%TimeLimit.time_left + new_points)
+				var new_time_limit = min(%TimeLimit.time_left + new_points, max_time_limit)
+				%TimeLimit.start(new_time_limit)
 				DebugDraw3D.draw_text(1.1 * pos, "+%d" % new_points, 128, Color.GREEN, 3)
 				pickup.global_position = random_point_on_planet()
