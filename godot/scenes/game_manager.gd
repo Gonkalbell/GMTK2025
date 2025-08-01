@@ -7,29 +7,54 @@ var score = 0
 
 var max_time_limit: float
 
+var obstacle_map: Dictionary[Vector3, Node3D] = {}
+var pickup_map: Dictionary[Vector3, Node3D] = {}
+
 func _ready() -> void:
 	max_time_limit = %TimeLimit.wait_time
 	for i in 5:
-		spawn_scene.call_deferred(pickup_scene)
+		spawn_pickup.call_deferred()
 	for i in 5:
-		spawn_scene.call_deferred(obstacle_scene)
+		spawn_obstacle.call_deferred()
 
 func _process(delta: float) -> void:
 	%HUD.text = "Time: %ds\nScore: %s" % [%TimeLimit.time_left, score]
 
 func _on_spawn_timer_timeout() -> void:
-	spawn_scene(obstacle_scene)
+	spawn_obstacle()
 
 func random_point_on_planet() -> Vector3:
 	var origin: Vector3 = %Planet.global_position
 	var radius: float = %Planet.scale.x
 	return origin + radius * Util.random_point_on_fibonacci_sphere()
 
-func spawn_scene(packed_scene: PackedScene):
-	var instance: Node3D = packed_scene.instantiate()
-	get_tree().root.add_child(instance)
-	instance.global_position = random_point_on_planet()
+func spawn_obstacle():
+	for i in 100:
+		var random_pos = random_point_on_planet()
+		# This is a hacky way to make sure we don't accidentally spawn an obstacle on another obstace/pickup
+		if obstacle_map.get(random_pos) != null or pickup_map.get(random_pos) != null:
+			continue
+		var instance: Node3D = obstacle_scene.instantiate()
+		get_tree().root.add_child(instance)
+		instance.global_position = random_pos
+		obstacle_map[random_pos] = instance
+		break
 
+
+func spawn_pickup():
+	var instance: Node3D = pickup_scene.instantiate()
+	get_tree().root.add_child(instance)
+	place_pickup(instance)
+
+# TODO: handle placing pickups on top of each other
+func place_pickup(pickup: Node3D):
+	var random_pos = random_point_on_planet()
+	var obstacle: Node3D = obstacle_map.get(random_pos);
+	if obstacle != null:
+		obstacle.queue_free()
+		obstacle_map.erase(random_pos)
+	pickup.global_position = random_pos
+	pickup_map[random_pos] = pickup
 
 func _on_player_completed_loop(points: PackedVector3Array) -> void:
 	var origin: Vector3 = %Planet.global_position
@@ -50,7 +75,7 @@ func _on_player_completed_loop(points: PackedVector3Array) -> void:
 		var flattened_point = Vector2(points[i].dot(plane_bitangent), points[i].dot(plane_tangent))
 		flattened_points[i] = flattened_point
 
-	var all_obstacles = get_tree().get_nodes_in_group("Obstacle") as Array[Node3D]
+	var all_obstacles = obstacle_map.values()
 	var looped_any_obstacles = false
 	for obstacle in all_obstacles:
 		var pos = obstacle.global_position
@@ -60,7 +85,7 @@ func _on_player_completed_loop(points: PackedVector3Array) -> void:
 			DebugDraw3D.draw_text(1.1 * pos, "X", 128, Color.RED, 3)
 			looped_any_obstacles = true
 
-	var all_pickups = get_tree().get_nodes_in_group("Pickup") as Array[Node3D]
+	var all_pickups = pickup_map.values()
 	var new_points = 0
 	for pickup in all_pickups:
 		var pos = pickup.global_position
@@ -75,4 +100,4 @@ func _on_player_completed_loop(points: PackedVector3Array) -> void:
 				var new_time_limit = min(%TimeLimit.time_left + new_points, max_time_limit)
 				%TimeLimit.start(new_time_limit)
 				DebugDraw3D.draw_text(1.1 * pos, "+%d" % new_points, 128, Color.GREEN, 3)
-				pickup.global_position = random_point_on_planet()
+				place_pickup(pickup)

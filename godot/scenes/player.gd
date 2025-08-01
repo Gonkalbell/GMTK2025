@@ -40,7 +40,7 @@ func _process(delta: float) -> void:
 	%CameraOrigin.global_basis = Basis(camera_right_dir, camera_up_dir, -camera_forward_dir)
 
 	var curve: Curve3D = %Path3D.curve
-	if curve.point_count > 2:
+	if curve.point_count > 0:
 		curve.set_point_position(curve.point_count - 1, %TailStart.global_position)
 
 func _on_new_path_point_timer_timeout() -> void:
