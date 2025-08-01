@@ -5,7 +5,10 @@ var score = 0
 @export var obstacle_scene: PackedScene = preload("res://scenes/obstacle.tscn")
 @export var pickup_scene: PackedScene= preload("res://scenes/pickup.tscn")
 
-func _enter_tree() -> void:
+var max_time_limit: float
+
+func _ready() -> void:
+	max_time_limit = %TimeLimit.wait_time
 	for i in 5:
 		spawn_scene.call_deferred(pickup_scene)
 	for i in 5:
@@ -47,15 +50,25 @@ func _on_player_completed_loop(points: PackedVector3Array) -> void:
 		flattened_points[i] = flattened_point
 
 	var all_obstacles = get_tree().get_nodes_in_group("Obstacle") as Array[Node3D]
+	var looped_any_obstacles = false
 	for obstacle in all_obstacles:
 		var pos = obstacle.global_position
+		var is_above_plane = pos.dot(plane_normal) >= 0
 		var flattened_pos = Vector2(pos.dot(plane_bitangent), pos.dot(plane_tangent))
-		if Geometry2D.is_point_in_polygon(flattened_pos, flattened_points):
-			DebugDraw3D.draw_sphere(pos, 3, Color.RED, 3)
+		if is_above_plane and Geometry2D.is_point_in_polygon(flattened_pos, flattened_points):
+			DebugDraw3D.draw_text(1.1 * pos, "X", 128, Color.RED, 3)
+			looped_any_obstacles = true
 	
 	var all_pickups = get_tree().get_nodes_in_group("Pickup") as Array[Node3D]
+	var new_points = 0
 	for pickup in all_pickups:
 		var pos = pickup.global_position
+		var is_above_plane = pos.dot(plane_normal) >= 0
 		var flattened_pos = Vector2(pos.dot(plane_bitangent), pos.dot(plane_tangent))
-		if Geometry2D.is_point_in_polygon(flattened_pos, flattened_points):
-			DebugDraw3D.draw_sphere(pos, 3, Color.GREEN, 3)
+		if is_above_plane and Geometry2D.is_point_in_polygon(flattened_pos, flattened_points):
+			if looped_any_obstacles:
+				DebugDraw3D.draw_text(1.1 * pos, "X", 128, Color.RED, 3)
+			else:
+				new_points += 1
+				score += new_points
+				DebugDraw3D.draw_text(1.1 * pos, "+%d" % new_points, 128, Color.GREEN, 3)
