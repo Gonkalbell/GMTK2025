@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bemaa4slumja3"]
+[gd_scene load_steps=4 format=3 uid="uid://bemaa4slumja3"]
 
 [ext_resource type="PackedScene" uid="uid://cqnk8emcgu6wd" path="res://coaster-kit/coaster-train-front.glb" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://dj532gayoo5ja" path="res://scenes/coaster.gd" id="1_g2els"]
@@ -10,16 +10,6 @@ _data = {
 }
 point_count = 2
 
-[sub_resource type="GDScript" id="GDScript_g2els"]
-script/source = "extends Node3D
-
-@export var follow_target: Node3D
-
-func _process(delta: float) -> void:
-	if follow_target != null:
-		global_position = lerp(global_position, follow_target.global_position, 0.1)
-"
-
 [node name="Player" type="Node3D"]
 
 [node name="Coaster" parent="." instance=ExtResource("1_3vyb7")]
@@ -28,7 +18,7 @@ script = ExtResource("1_g2els")
 
 [node name="CameraTarget" type="Node3D" parent="Coaster"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.234)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
 [node name="TailStart" type="Node3D" parent="Coaster"]
 unique_name_in_owner = true
@@ -53,18 +43,14 @@ path_continuous_u = true
 path_u_distance = 1.0
 path_joined = false
 
-[node name="CameraOrigin" type="Node3D" parent="." node_paths=PackedStringArray("follow_target")]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.525924)
-script = SubResource("GDScript_g2els")
-follow_target = NodePath("../Coaster/CameraTarget")
-
-[node name="Camera" type="Camera3D" parent="CameraOrigin"]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 0.707106, 0.707106, 0, -0.707106, 0.707106, 0.609, 5, 5)
-
-[node name="Timer" type="Timer" parent="."]
+[node name="NewPathPointTimer" type="Timer" parent="Path3D"]
 wait_time = 0.2
 autostart = true
 
-[connection signal="timeout" from="Timer" to="Coaster" method="_on_timer_timeout"]
+[node name="CameraOrigin" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="Camera" type="Camera3D" parent="CameraOrigin"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 9, 7)
+
+[connection signal="timeout" from="Path3D/NewPathPointTimer" to="Coaster" method="_on_timer_timeout"]

@@ -1,7 +1,6 @@
 # TODO
 
 - ~~Detect when splines form a loop~~
-- Enemies / goals to loop around
 - use https://docs.godotengine.org/en/4.4/classes/class_meshdatatool.html#class-meshdatatool to deform coaster-steel-straigt.glm (or coaster-steeltrack.glm)
 - reorganize .glb files in coaster-kit into subdirectories, but find out how to fix up their texture references after moving them
 - Game Manager:
@@ -13,8 +12,10 @@
 - UI:
   - Show time and score
 - Game world
-  - Switch from plane to moving around sphere
-  - Possibly have faint X-Ray vision?
+  - ~~Switch from plane to moving around sphere~~
+  - ~~Sphere controls~~
+  - ~~Camera controls~~
+  - Possibly have faint X-Ray vision to see objects on the other side of the planet?
   - delete end of tail so it's impossible to "bisect" the world. i.e tail length should always be < sphere circumference
   - maybe make the sphere slowly grow over time?
 - Actually decent art / polish
