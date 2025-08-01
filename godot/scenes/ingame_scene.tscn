@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cik30de5gaaah"]
+[gd_scene load_steps=12 format=3 uid="uid://cik30de5gaaah"]
 
 [ext_resource type="Script" uid="uid://ovjegpk30m4h" path="res://scenes/ingame_scene.gd" id="1_objyc"]
 [ext_resource type="PackedScene" uid="uid://bkk87o2ooo6at" path="res://ui/overlays/fade_overlay.tscn" id="1_y6ebv"]
@@ -22,6 +22,14 @@ sky = SubResource("Sky_gadrd")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gadrd"]
+albedo_color = Color(0.3975, 0.650125, 0.75, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_gadrd"]
+material = SubResource("StandardMaterial3D_gadrd")
+radius = 1.0
+height = 2.0
+
 [node name="IngameScene" type="Node3D"]
 script = ExtResource("1_objyc")
 
@@ -44,13 +52,14 @@ process_mode = 2
 visible = false
 
 [node name="bench2" parent="." instance=ExtResource("7_5jhce")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.58848)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
 
 [node name="tree-large2" parent="." instance=ExtResource("8_vus8m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.81194, -4.76837e-07, -0.0670462)
 
 [node name="Player" parent="." instance=ExtResource("7_vus8m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.525924)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.90281, 0, 0)
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+mesh = SubResource("SphereMesh_gadrd")
