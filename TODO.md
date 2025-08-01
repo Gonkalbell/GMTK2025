@@ -10,8 +10,8 @@
     - Mobile / mouse controls?
     - spawn pickups / obstacles in waves?
 - remove template stuff
-  - i18n
-  - Save/Load
+  - ~~i18n~~
+  - ~~Save/Load~~
   - Combine menu scene with main scene
   - Make github readme with links
 - Art & Polish

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GMTK2025"
-run/main_scene="uid://cik30de5gaaah"
+run/main_scene="uid://dv2y18ye8j7o0"
 config/features=PackedStringArray("4.4")
 config/icon="res://icon.svg"
 
@@ -105,7 +105,7 @@ pause={
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://i18n/translation.de.translation", "res://i18n/translation.en.translation")
+locale/translations=PackedStringArray("res://i18n/translation.en.translation")
 
 [rendering]
 

@@ -110,3 +110,9 @@ func _on_player_completed_loop(points: PackedVector3Array) -> void:
 				%TimeLimit.start(new_time_limit)
 				Notification.spawn_score(get_tree(), 1.1 * pos, new_points)
 				place_pickup(pickup)
+
+
+func _on_time_limit_timeout() -> void:
+	%FadeOverlay.fade_out()
+	await %FadeOverlay.on_complete_fade_out
+	get_tree().change_scene_to_file("res://scenes/main_menu_scene.tscn")

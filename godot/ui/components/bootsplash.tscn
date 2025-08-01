@@ -1,8 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://bo4ehnumovbi"]
+[gd_scene load_steps=2 format=3 uid="uid://cm6cm53qgpmej"]
 
-[ext_resource type="Script" uid="uid://62yttq4lfsqf" path="res://ui/components/bootsplash.gd" id="1_3allk"]
+[sub_resource type="GDScript" id="GDScript_p8bsq"]
+script/source = "class_name Bootsplash
+extends Control
+"
 
 [node name="Bootsplash" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_3allk")
+script = SubResource("GDScript_p8bsq")
