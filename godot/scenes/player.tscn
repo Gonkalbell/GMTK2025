@@ -5,10 +5,10 @@
 
 [sub_resource type="Curve3D" id="Curve3D_dqkch"]
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.01),
-"tilts": PackedFloat32Array(0, 0)
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.1, 0, 0, 0, 0, 0, 0, 0, 0, 0.2),
+"tilts": PackedFloat32Array(0, 0, 0)
 }
-point_count = 2
+point_count = 3
 
 [node name="Player" type="Node3D"]
 
@@ -22,15 +22,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
 [node name="TailStart" type="Node3D" parent="Coaster"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.65)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0.65)
 
 [node name="Path3D" type="Path3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.65)
 curve = SubResource("Curve3D_dqkch")
 
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="Path3D"]
-polygon = PackedVector2Array(-0.5, -0.5, -0.507999, 0.0157447, 0.507674, -0.00679596, 0.5, -0.5)
+polygon = PackedVector2Array(-0.1, -0.5, -0.1, 0, 0.1, 0, 0.1, -0.5)
 mode = 2
 path_node = NodePath("..")
 path_interval_type = 0
