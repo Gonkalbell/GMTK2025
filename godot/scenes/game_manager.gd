@@ -59,7 +59,7 @@ func _on_player_completed_loop(points: PackedVector3Array) -> void:
 		if is_above_plane and Geometry2D.is_point_in_polygon(flattened_pos, flattened_points):
 			DebugDraw3D.draw_text(1.1 * pos, "X", 128, Color.RED, 3)
 			looped_any_obstacles = true
-	
+
 	var all_pickups = get_tree().get_nodes_in_group("Pickup") as Array[Node3D]
 	var new_points = 0
 	for pickup in all_pickups:

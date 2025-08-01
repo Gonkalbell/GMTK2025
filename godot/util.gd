@@ -16,7 +16,7 @@ static func segment_curve_intersect3d(from: Vector3, to: Vector3, points: Packed
 			}
 
 	return null
-	
+
 static func random_on_unit_sphere() -> Vector3:
 	var theta = 2 * PI * randf()
 	var phi = PI * randf()
