@@ -30,7 +30,9 @@ func _process(delta: float) -> void:
 	var up_dir_old: Vector3 = (%Coaster.global_position - origin).normalized()
 	var forward_dir_old: Vector3 = (-%Coaster.global_basis.z).slide(up_dir_old).normalized()    
 	var view_dir: Vector2 = cam.unproject_position(%Coaster.global_position + forward_dir_old) - cam.unproject_position(%Coaster.global_position)
-	var yaw_input: float = view_dir.angle_to(input)
+	var yaw_input: float = 0
+	if input.length_squared() > 0.0:
+		yaw_input = view_dir.angle_to(input)
 
 	speed_timer -= delta;
 	if speed_timer < 0:
