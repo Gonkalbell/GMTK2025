@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cik30de5gaaah"]
+[gd_scene load_steps=12 format=3 uid="uid://cik30de5gaaah"]
 
 [ext_resource type="Script" uid="uid://ovjegpk30m4h" path="res://scenes/ingame_scene.gd" id="1_objyc"]
 [ext_resource type="PackedScene" uid="uid://bkk87o2ooo6at" path="res://ui/overlays/fade_overlay.tscn" id="1_y6ebv"]
@@ -20,6 +20,8 @@ background_mode = 2
 sky = SubResource("Sky_gadrd")
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="Theme" id="Theme_2577t"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gadrd"]
 albedo_color = Color(0.3975, 0.650125, 0.75, 1)
@@ -56,6 +58,7 @@ offset_left = 16.0
 offset_top = 16.0
 offset_right = 89.0
 offset_bottom = 65.0
+theme = SubResource("Theme_2577t")
 text = "Time: %s
 Score: %s"
 

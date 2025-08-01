@@ -2,7 +2,7 @@
 
 - Mechanics
   - ~~Fix object spawning so things don't bunch up too much~~
-  - Don't use DebugDraw3D for getting points (it doesn't show up in release builds)
+  - ~~Don't use DebugDraw3D for getting points (it doesn't show up in release builds)~~
   - Game state (title -> game -> game over)
   - Optional stuff
     - Change player speed over time?
@@ -19,7 +19,7 @@
     - Player
     - Trail
     - Planet
-      - Possibly make panet transparent or have x-ray shader so you can see objects on the other side
+      - Possibly make planet transparent or have x-ray shader so you can see objects on the other side
     - Pickups
     - Obstacles
     - Background

@@ -18,7 +18,7 @@ func _ready() -> void:
 		spawn_obstacle.call_deferred()
 
 func _process(delta: float) -> void:
-	%HUD.text = "Time: %ds\nScore: %s" % [%TimeLimit.time_left, score]
+	%HUD.text = "Time: %d\nScore: %s" % [%TimeLimit.time_left, score]
 
 func _on_spawn_timer_timeout() -> void:
 	spawn_obstacle()
@@ -82,7 +82,7 @@ func _on_player_completed_loop(points: PackedVector3Array) -> void:
 		var is_above_plane = pos.dot(plane_normal) >= 0
 		var flattened_pos = Vector2(pos.dot(plane_bitangent), pos.dot(plane_tangent))
 		if is_above_plane and Geometry2D.is_point_in_polygon(flattened_pos, flattened_points):
-			DebugDraw3D.draw_text(1.1 * pos, "X", 128, Color.RED, 3)
+			Notification.spawn_invalid(get_tree(), 1.1 * pos)
 			looped_any_obstacles = true
 
 	var all_pickups = pickup_map.values()
@@ -93,11 +93,11 @@ func _on_player_completed_loop(points: PackedVector3Array) -> void:
 		var flattened_pos = Vector2(pos.dot(plane_bitangent), pos.dot(plane_tangent))
 		if is_above_plane and Geometry2D.is_point_in_polygon(flattened_pos, flattened_points):
 			if looped_any_obstacles:
-				DebugDraw3D.draw_text(1.1 * pos, "X", 128, Color.RED, 3)
+				Notification.spawn_invalid(get_tree(), 1.1 * pos)
 			else:
 				new_points += 1
 				score += new_points
 				var new_time_limit = min(%TimeLimit.time_left + new_points, max_time_limit)
 				%TimeLimit.start(new_time_limit)
-				DebugDraw3D.draw_text(1.1 * pos, "+%d" % new_points, 128, Color.GREEN, 3)
+				Notification.spawn_score(get_tree(), 1.1 * pos, new_points)
 				place_pickup(pickup)
