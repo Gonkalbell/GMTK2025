@@ -1,10 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://c1du320nmvd2l"]
+[gd_scene load_steps=2 format=3 uid="uid://c1du320nmvd2l"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p1s84"]
-albedo_color = Color(0, 1, 0, 1)
+[ext_resource type="PackedScene" uid="uid://docmich464k2" path="res://coaster-kit/tree.glb" id="1_pg2rt"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_pg2rt"]
-material = SubResource("StandardMaterial3D_p1s84")
+[node name="Pickup" type="Node3D" groups=["Pickup"]]
 
-[node name="Pickup" type="MeshInstance3D" groups=["Pickup"]]
-mesh = SubResource("BoxMesh_pg2rt")
+[node name="tree2" parent="." instance=ExtResource("1_pg2rt")]

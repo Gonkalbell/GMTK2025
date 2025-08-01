@@ -45,6 +45,7 @@ Obstacle=""
 [gui]
 
 theme/custom="res://ui/theme.tres"
+theme/custom_font="uid://d1ltlbwtwvhdg"
 
 [input]
 

@@ -16,14 +16,13 @@ static func segment_curve_intersect3d(from: Vector3, to: Vector3, points: Packed
 			}
 
 	return null
-	
-static func random_on_unit_sphere() -> Vector3:
-	var theta = 2 * PI * randf()
-	var phi = PI * randf()
 
-	# Convert to cartesian
-	var x = sin(phi) * cos(theta)
-	var y = sin(phi) * sin(theta)
-	var z = cos(phi)
-
-	return Vector3(x,y,z)
+static func random_point_on_fibonacci_sphere(samples = 200) -> Vector3:
+	const golden_angle = PI * (3 - sqrt(5))
+	var r = float(randi_range(0, samples - 1))
+	var y = lerp(-1, 1, r / samples)
+	var radius = sqrt(1 - y * y)
+	var theta = r * golden_angle
+	var x = cos(theta) * radius
+	var z = sin(theta) * radius
+	return Vector3(x, y, z)
