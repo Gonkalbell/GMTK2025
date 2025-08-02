@@ -35,7 +35,7 @@ func spawn_obstacle():
 		if obstacle_map.get(random_pos) != null or pickup_map.get(random_pos) != null:
 			continue
 		var instance: Node3D = obstacle_scene.instantiate()
-		get_tree().root.add_child(instance)
+		add_child(instance)
 		instance.global_position = random_pos
 		instance.global_basis = get_arbitrary_basis(random_pos)
 		obstacle_map[random_pos] = instance
@@ -43,7 +43,7 @@ func spawn_obstacle():
 
 func spawn_pickup():
 	var instance: Node3D = pickup_scene.instantiate()
-	get_tree().root.add_child(instance)
+	add_child(instance)
 	place_pickup(instance)
 
 # TODO: handle placing pickups on top of each other
@@ -91,7 +91,7 @@ func _on_player_completed_loop(points: PackedVector3Array) -> void:
 		var is_above_plane = pos.dot(plane_normal) >= 0
 		var flattened_pos = Vector2(pos.dot(plane_bitangent), pos.dot(plane_tangent))
 		if is_above_plane and Geometry2D.is_point_in_polygon(flattened_pos, flattened_points):
-			Notification.spawn_invalid(get_tree(), 1.1 * pos)
+			Notification.spawn_invalid(self, 1.1 * pos)
 			looped_any_obstacles = true
 
 	var all_pickups = pickup_map.values()
@@ -103,14 +103,14 @@ func _on_player_completed_loop(points: PackedVector3Array) -> void:
 		var flattened_pos = Vector2(pos.dot(plane_bitangent), pos.dot(plane_tangent))
 		if is_above_plane and Geometry2D.is_point_in_polygon(flattened_pos, flattened_points):
 			if looped_any_obstacles:
-				Notification.spawn_invalid(get_tree(), 1.1 * pos)
+				Notification.spawn_invalid(self, 1.1 * pos)
 			else:
 				new_points += 1
 				total_points += new_points
 				score += new_points
 				var new_time_limit = min(%TimeLimit.time_left + new_points, max_time_limit)
 				%TimeLimit.start(new_time_limit)
-				Notification.spawn_score(get_tree(), 1.1 * pos, new_points)
+				Notification.spawn_score(self, 1.1 * pos, new_points)
 				place_pickup(pickup)
 
 	if looped_any_obstacles:

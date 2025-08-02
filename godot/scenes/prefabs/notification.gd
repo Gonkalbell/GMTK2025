@@ -2,16 +2,16 @@ class_name Notification extends Label3D
 
 const scene: PackedScene = preload("res://scenes/prefabs/notification.tscn")
 
-static func spawn(in_tree: SceneTree, in_pos: Vector3, in_text: String, in_size: int, in_color: Color, in_duration: float):
+static func spawn(in_root: Node3D, in_pos: Vector3, in_text: String, in_size: int, in_color: Color, in_duration: float):
 	var notif = scene.instantiate()
-	in_tree.root.add_child(notif)
+	in_root.add_child(notif)
 	notif.initialize(in_pos, in_text, in_size, in_color, in_duration)
 
-static func spawn_score(in_tree: SceneTree, in_pos: Vector3, in_score: int):
-	Notification.spawn(in_tree, in_pos, "+%d" % in_score, 32, Color.GREEN, 3)
+static func spawn_score(in_root: Node3D, in_pos: Vector3, in_score: int):
+	Notification.spawn(in_root, in_pos, "+%d" % in_score, 32, Color.GREEN, 3)
 
-static func spawn_invalid(in_tree: SceneTree, in_pos: Vector3):
-	Notification.spawn(in_tree, in_pos, "X", 32, Color.RED, 3)
+static func spawn_invalid(in_root: Node3D, in_pos: Vector3):
+	Notification.spawn(in_root, in_pos, "X", 32, Color.RED, 3)
 
 func initialize(in_pos: Vector3, in_text: String, in_size: int, in_color: Color, in_duration: float):
 	global_position = in_pos
