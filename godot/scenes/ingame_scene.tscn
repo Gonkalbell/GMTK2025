@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bkk87o2ooo6at" path="res://ui/overlays/fade_overlay.tscn" id="1_y6ebv"]
 [ext_resource type="PackedScene" uid="uid://jyv4g54adkmo" path="res://ui/overlays/pause_overlay.tscn" id="3_8o178"]
 [ext_resource type="Script" uid="uid://ce6yf2m8pio31" path="res://scenes/game_manager.gd" id="5_2577t"]
-[ext_resource type="PackedScene" uid="uid://bemaa4slumja3" path="res://scenes/player.tscn" id="7_vus8m"]
+[ext_resource type="PackedScene" uid="uid://bemaa4slumja3" path="res://scenes/prefabs/player.tscn" id="7_vus8m"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2577t"]
 sky_top_color = Color(0.6, 0.8, 0.933333, 1)

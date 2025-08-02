@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bemaa4slumja3"]
 
 [ext_resource type="PackedScene" uid="uid://cqnk8emcgu6wd" path="res://coaster-kit/coaster-train-front.glb" id="1_3vyb7"]
-[ext_resource type="Script" uid="uid://dj532gayoo5ja" path="res://scenes/player.gd" id="1_g2els"]
+[ext_resource type="Script" uid="uid://dj532gayoo5ja" path="res://scenes/prefabs/player.gd" id="1_g2els"]
 
 [sub_resource type="Curve3D" id="Curve3D_dqkch"]
 _data = {

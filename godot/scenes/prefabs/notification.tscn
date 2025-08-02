@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dose74eut1w3b"]
 
-[ext_resource type="Script" uid="uid://cjcfeett3m00c" path="res://scenes/notification.gd" id="1_deh2p"]
+[ext_resource type="Script" uid="uid://cjcfeett3m00c" path="res://scenes/prefabs/notification.gd" id="1_deh2p"]
 [ext_resource type="FontFile" uid="uid://d1ltlbwtwvhdg" path="res://fonts/Geo-Regular.ttf" id="1_if3b5"]
 
 [node name="Notification" type="Label3D"]

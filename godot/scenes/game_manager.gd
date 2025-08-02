@@ -2,8 +2,8 @@ extends Node3D
 
 var score = 0
 
-@export var obstacle_scene: PackedScene = preload("res://scenes/obstacle.tscn")
-@export var pickup_scene: PackedScene = preload("res://scenes/pickup.tscn")
+@export var obstacle_scene: PackedScene = preload("res://scenes/prefabs/obstacle.tscn")
+@export var pickup_scene: PackedScene = preload("res://scenes/prefabs/pickup.tscn")
 
 var max_time_limit: float
 
@@ -121,7 +121,7 @@ func _on_player_completed_loop(points: PackedVector3Array) -> void:
 func _on_time_limit_timeout() -> void:
 	%FadeOverlay.fade_out()
 	await %FadeOverlay.on_complete_fade_out
-	get_tree().change_scene_to_file("res://scenes/main_menu_scene.tscn")
+	get_tree().change_scene_to_file("res://scenes/game_over.tscn")
 
 signal points_gained(points: float, total_points: float)
 

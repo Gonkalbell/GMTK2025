@@ -4,6 +4,7 @@ signal game_exited
 
 @onready var resume_button := %ResumeButton
 @onready var settings_button := %SettingsButton
+@onready var main_menu_button := %MainMenuButton
 @onready var exit_button := %ExitButton
 @onready var settings_container := %SettingsContainer
 @onready var menu_container := %MenuContainer
@@ -12,6 +13,7 @@ signal game_exited
 func _ready() -> void:
 	resume_button.pressed.connect(_resume)
 	settings_button.pressed.connect(_settings)
+	main_menu_button.pressed.connect(_main_menu_button)
 	exit_button.pressed.connect(_exit)
 	back_button.pressed.connect(_pause_menu)
 	
@@ -27,7 +29,11 @@ func _settings() -> void:
 	menu_container.visible = false
 	settings_container.visible = true
 	back_button.grab_focus()
-	
+
+func _main_menu_button() -> void:
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://scenes/main_menu_scene.tscn")
+
 func _exit() -> void:
 	game_exited.emit()
 	get_tree().quit()

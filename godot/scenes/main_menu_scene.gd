@@ -13,6 +13,7 @@ var next_scene = game_scene
 func _ready() -> void:
 	new_game_button.disabled = game_scene == null
 	settings_button.disabled = settings_scene == null
+	overlay.visible = true
 	
 	# connect signals
 	new_game_button.pressed.connect(_on_play_button_pressed)
