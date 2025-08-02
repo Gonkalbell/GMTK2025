@@ -22,17 +22,24 @@ func _ready() -> void:
 	curve.add_point(%TailStart.global_position)
 
 func _process(delta: float) -> void:
-	var origin: Vector3 = planet.global_position
-	var radius: float = planet.scale.x
-	var input: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	var planet_origin: Vector3 = planet.global_position
+	var planet_radius: float = planet.scale.x
 
-	var cam: Camera3D = get_viewport().get_camera_3d()
-	var up_dir_old: Vector3 = (%Coaster.global_position - origin).normalized()
-	var forward_dir_old: Vector3 = (-%Coaster.global_basis.z).slide(up_dir_old).normalized()    
-	var view_dir: Vector2 = cam.unproject_position(%Coaster.global_position + forward_dir_old) - cam.unproject_position(%Coaster.global_position)
+	var up_dir_old: Vector3 = (%Coaster.global_position - planet_origin).normalized()
+	var forward_dir_old: Vector3 = (-%Coaster.global_basis.z).slide(up_dir_old).normalized()
+	var coaster_screen_pos: Vector2 = %Camera.unproject_position(%Coaster.global_position)
+	var view_dir: Vector2 = %Camera.unproject_position(%Coaster.global_position + forward_dir_old) - coaster_screen_pos
+
 	var yaw_input: float = 0
-	if input.length_squared() > 0.0:
+
+	var input: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	if not is_zero_approx(input.length_squared()):
 		yaw_input = view_dir.angle_to(input)
+	elif Input.is_action_pressed("click"):
+		var mouse_pos: Vector2 = get_viewport().get_mouse_position()
+		var dir_to_mouse: Vector2 = (mouse_pos - coaster_screen_pos).normalized()
+		if dir_to_mouse.length_squared() > 0.001:
+			yaw_input = view_dir.angle_to(dir_to_mouse)
 
 	speed_timer -= delta;
 	if speed_timer < 0:
@@ -42,15 +49,15 @@ func _process(delta: float) -> void:
 	%Coaster.rotate_object_local(Vector3.UP, TAU * -yaw_input * delta * turn_speed)
 	%Coaster.translate_object_local(Vector3.FORWARD * delta * (move_speed + speed_bonus * bonus_speed_modifier))
 
-	var up_dir: Vector3 = (%Coaster.global_position - origin).normalized()
+	var up_dir: Vector3 = (%Coaster.global_position - planet_origin).normalized()
 	var forward_dir: Vector3 = (-%Coaster.global_basis.z).slide(up_dir).normalized()
 	var right_dir: Vector3 = up_dir.cross(forward_dir).normalized()
-	
-	%Coaster.global_position = origin + up_dir * radius
+
+	%Coaster.global_position = planet_origin + up_dir * planet_radius
 	%Coaster.global_basis = Basis(right_dir, up_dir, -forward_dir)
 
 	%CameraOrigin.global_position = %CameraTarget.global_position
-	var camera_up_dir = (%CameraOrigin.global_position - origin).normalized()
+	var camera_up_dir = (%CameraOrigin.global_position - planet_origin).normalized()
 	var camera_forward_dir = (-%CameraOrigin.global_basis.z).slide(camera_up_dir).normalized()
 	var camera_right_dir = camera_up_dir.cross(camera_forward_dir).normalized()
 
