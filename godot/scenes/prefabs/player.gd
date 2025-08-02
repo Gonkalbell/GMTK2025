@@ -17,7 +17,7 @@ func _ready() -> void:
 	var curve: Curve3D = %Path3D.curve
 	curve.clear_points()
 	# Add some initial points so we don't get errors
-	var back_dir = %TailStart.global_position - %Coaster.global_position
+	var back_dir = %TailStart.global_position - %Player.global_position
 	curve.add_point(%TailStart.global_position + 0.1 * back_dir)
 	curve.add_point(%TailStart.global_position)
 
@@ -25,10 +25,10 @@ func _process(delta: float) -> void:
 	var planet_origin: Vector3 = planet.global_position
 	var planet_radius: float = planet.scale.x
 
-	var up_dir_old: Vector3 = (%Coaster.global_position - planet_origin).normalized()
-	var forward_dir_old: Vector3 = (-%Coaster.global_basis.z).slide(up_dir_old).normalized()
-	var coaster_screen_pos: Vector2 = %Camera.unproject_position(%Coaster.global_position)
-	var view_dir: Vector2 = %Camera.unproject_position(%Coaster.global_position + forward_dir_old) - coaster_screen_pos
+	var up_dir_old: Vector3 = (%Player.global_position - planet_origin).normalized()
+	var forward_dir_old: Vector3 = (-%Player.global_basis.z).slide(up_dir_old).normalized()
+	var coaster_screen_pos: Vector2 = %Camera.unproject_position(%Player.global_position)
+	var view_dir: Vector2 = %Camera.unproject_position(%Player.global_position + forward_dir_old) - coaster_screen_pos
 
 	var yaw_input: float = 0
 
@@ -46,15 +46,15 @@ func _process(delta: float) -> void:
 		speed_bonus = 0
 		speed_timer = 0
 
-	%Coaster.rotate_object_local(Vector3.UP, TAU * -yaw_input * delta * turn_speed)
-	%Coaster.translate_object_local(Vector3.FORWARD * delta * (move_speed + speed_bonus * bonus_speed_modifier))
+	%Player.rotate_object_local(Vector3.UP, TAU * -yaw_input * delta * turn_speed)
+	%Player.translate_object_local(Vector3.FORWARD * delta * (move_speed + speed_bonus * bonus_speed_modifier))
 
-	var up_dir: Vector3 = (%Coaster.global_position - planet_origin).normalized()
-	var forward_dir: Vector3 = (-%Coaster.global_basis.z).slide(up_dir).normalized()
+	var up_dir: Vector3 = (%Player.global_position - planet_origin).normalized()
+	var forward_dir: Vector3 = (-%Player.global_basis.z).slide(up_dir).normalized()
 	var right_dir: Vector3 = up_dir.cross(forward_dir).normalized()
 
-	%Coaster.global_position = planet_origin + up_dir * planet_radius
-	%Coaster.global_basis = Basis(right_dir, up_dir, -forward_dir)
+	%Player.global_position = planet_origin + up_dir * planet_radius
+	%Player.global_basis = Basis(right_dir, up_dir, -forward_dir)
 
 	%CameraOrigin.global_position = %CameraTarget.global_position
 	var camera_up_dir = (%CameraOrigin.global_position - planet_origin).normalized()

@@ -16,13 +16,13 @@
   - Make github readme with links
 - Art & Polish
   - Meshes & Materials
-    - Player
+    - ~~Player~~
     - Trail
-    - Planet
+    - ~~Planet~~
       - Possibly make planet transparent or have x-ray shader so you can see objects on the other side
-    - Pickups
-    - Obstacles
-    - Background
+    - ~~Pickups~~
+    - ~~Obstacles~~
+    - ~~Background~~
   - Music
     - Menu
     - Game Over

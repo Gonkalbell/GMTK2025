@@ -1,7 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://p55tqrw6nwjl"]
 
-[ext_resource type="PackedScene" uid="uid://cplbmod3pvp67" path="res://coaster-kit/trash.glb" id="1_7ukg5"]
+[ext_resource type="PackedScene" uid="uid://dprmcf1t554yl" path="res://art/Spiky Ball.glb" id="1_88d1b"]
 
 [node name="Obstacle" type="Node3D" groups=["Obstacle"]]
 
-[node name="trash2" parent="." instance=ExtResource("1_7ukg5")]
+[node name="Root Scene" parent="." instance=ExtResource("1_88d1b")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0.8, 0)

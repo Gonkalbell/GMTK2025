@@ -2,34 +2,25 @@
 
 [ext_resource type="Script" uid="uid://ovjegpk30m4h" path="res://scenes/ingame_scene.gd" id="1_objyc"]
 [ext_resource type="PackedScene" uid="uid://bkk87o2ooo6at" path="res://ui/overlays/fade_overlay.tscn" id="1_y6ebv"]
+[ext_resource type="Texture2D" uid="uid://cq6lxyd0vvd2e" path="res://art/panorama_image.png" id="2_gadrd"]
 [ext_resource type="PackedScene" uid="uid://jyv4g54adkmo" path="res://ui/overlays/pause_overlay.tscn" id="3_8o178"]
 [ext_resource type="Script" uid="uid://ce6yf2m8pio31" path="res://scenes/game_manager.gd" id="5_2577t"]
+[ext_resource type="PackedScene" uid="uid://7qhicg16pnj3" path="res://art/Planet-IVnmauIgWX.glb" id="6_5jhce"]
 [ext_resource type="PackedScene" uid="uid://bemaa4slumja3" path="res://scenes/prefabs/player.tscn" id="7_vus8m"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2577t"]
-sky_top_color = Color(0.6, 0.8, 0.933333, 1)
-sky_horizon_color = Color(0.666667, 0.533333, 0.666667, 1)
-ground_bottom_color = Color(0.2, 0.266667, 0.133333, 1)
-ground_horizon_color = Color(0.4, 0.533333, 0.533333, 1)
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_5jhce"]
+panorama = ExtResource("2_gadrd")
 
-[sub_resource type="Sky" id="Sky_gadrd"]
-sky_material = SubResource("ProceduralSkyMaterial_2577t")
+[sub_resource type="Sky" id="Sky_vus8m"]
+sky_material = SubResource("PanoramaSkyMaterial_5jhce")
 
 [sub_resource type="Environment" id="Environment_5jhce"]
 background_mode = 2
-sky = SubResource("Sky_gadrd")
+sky = SubResource("Sky_vus8m")
 tonemap_mode = 2
 glow_enabled = true
 
 [sub_resource type="Theme" id="Theme_2577t"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gadrd"]
-albedo_color = Color(0.3975, 0.650125, 0.75, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_gadrd"]
-material = SubResource("StandardMaterial3D_gadrd")
-radius = 1.0
-height = 2.0
 
 [node name="IngameScene" type="Node3D"]
 script = ExtResource("1_objyc")
@@ -37,6 +28,13 @@ script = ExtResource("1_objyc")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
+
+[node name="FillLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.211356, -0.273474, -0.938371, 0.887045, 0.349507, -0.301657, 0.410461, -0.896134, 0.168714, 0, 0, 0)
+light_color = Color(1, 1, 0.501961, 1)
+light_energy = 0.2
+light_indirect_energy = 0.2
+light_volumetric_fog_energy = 0.2
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_5jhce")
@@ -66,10 +64,12 @@ Score: %s"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
 planet = NodePath("../Planet")
 
-[node name="Planet" type="MeshInstance3D" parent="."]
+[node name="Planet" type="Node3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
-mesh = SubResource("SphereMesh_gadrd")
+
+[node name="Root Scene" parent="Planet" instance=ExtResource("6_5jhce")]
+transform = Transform3D(0.535, 0, 0, 0, 0.535, 0, 0, 0, 0.535, 0, 0, 0)
 
 [node name="GameManager" type="Node3D" parent="."]
 script = ExtResource("5_2577t")

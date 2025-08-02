@@ -1,7 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://c1du320nmvd2l"]
 
-[ext_resource type="PackedScene" uid="uid://docmich464k2" path="res://coaster-kit/tree.glb" id="1_pg2rt"]
+[ext_resource type="PackedScene" uid="uid://b5sck7ghyralh" path="res://art/Mineral.glb" id="1_vxnv5"]
 
 [node name="Pickup" type="Node3D" groups=["Pickup"]]
 
-[node name="tree2" parent="." instance=ExtResource("1_pg2rt")]
+[node name="Root Scene" parent="." instance=ExtResource("1_vxnv5")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.221385, 0)

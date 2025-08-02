@@ -17,7 +17,7 @@ func _ready() -> void:
 	for i in 5:
 		spawn_obstacle.call_deferred()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	%HUD.text = "Time: %d\nScore: %s" % [%TimeLimit.time_left, score]
 
 func _on_spawn_timer_timeout() -> void:
