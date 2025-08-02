@@ -3,11 +3,11 @@
 - Mechanics
   - ~~Fix object spawning so things don't bunch up too much~~
   - ~~Don't use DebugDraw3D for getting points (it doesn't show up in release builds)~~
-  - Game state (title -> game -> game over)
+  - ~~Game state (title -> game -> game over)~~
   - Optional stuff
     - Change player speed over time?
     - Make planet grow over time?
-    - Mobile / mouse controls?
+    - ~~Mobile / mouse controls?~~
     - spawn pickups / obstacles in waves?
 - remove template stuff
   - ~~i18n~~
@@ -32,7 +32,7 @@
     - invalid loop
     - empty loop?
   - UI
-    - Font
+    - ~~Font~~
     - Buttons
     - Sliders
   - Itch.io Page
