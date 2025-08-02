@@ -4,7 +4,8 @@ extends Node3D
 @export var turn_speed: float = 0.5
 @export var bonus_speed_modifier: float = 1.0;
 ## We use this angle (in turns) to find the path's maximum arc length relative to the radius of the planet.
-@export var max_path_arc_angle: float = 0.95
+@export var max_path_arc_angle: float = 0.98
+@export var path_max_segment_length: float = 0.2
 
 var speed_bonus: float = 0.0
 var speed_timer: float = 0.0
@@ -63,26 +64,28 @@ func _process(delta: float) -> void:
 	%CameraOrigin.global_basis = Basis(camera_right_dir, camera_up_dir, -camera_forward_dir)
 
 	var curve: Curve3D = %Path3D.curve
-	if curve.point_count > 0:
+	var tail_pos = %TailStart.global_position
+	if curve.point_count >= 2 and curve.get_point_position(curve.point_count - 2).distance_to(tail_pos) < path_max_segment_length:
 		curve.set_point_position(curve.point_count - 1, %TailStart.global_position)
+	else:
+		if curve.point_count >= 2:
+			_detect_loop()
+		curve.add_point(tail_pos)
+		while curve.get_baked_length() > max_path_arc_angle * TAU * planet_radius:
+			curve.remove_point(0)
 
-func _on_new_path_point_timer_timeout() -> void:
-	var radius: float = %Planet.scale.x
+func _detect_loop():
 	var curve: Curve3D = %Path3D.curve
-	# Detect if our path made a loop
-	if curve.point_count > 1:
-		var points = curve.tessellate_even_length(5, 2)
-		var old_points = points.slice(0, -2)
-		var intersection = Util.segment_curve_intersect3d(points[-1], points[-2], old_points)
-		if intersection != null:
-			var intersection_index = intersection["index"]
-			var loop_points = points.slice(intersection_index)
-			curve.set_point_count(intersection_index)
-			curve.add_point(intersection["point"])
-			completed_loop.emit(loop_points)
-	curve.add_point(%TailStart.global_position)
-	while curve.get_baked_length() > max_path_arc_angle * TAU * radius:
-		curve.remove_point(0)
+	var tail_pos = %TailStart.global_position
+	var prev_pos = curve.get_point_position(curve.point_count - 1)
+	var points = Util.get_curve3d_point_positions(curve).slice(0, -1)
+	var intersection = Util.segment_curve_intersect3d(prev_pos, tail_pos, points)
+	if intersection != null:
+		var intersection_index = intersection["index"]
+		var loop_points = points.slice(intersection_index)
+		curve.set_point_count(intersection_index)
+		curve.add_point(intersection["point"])
+		completed_loop.emit(loop_points)
 
 
 func _on_game_manager_points_gained(points: float, total_points: float) -> void:

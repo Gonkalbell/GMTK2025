@@ -36,3 +36,10 @@
     - Buttons
     - Sliders
   - Itch.io Page
+- Bug
+  - fix shadow flickering
+  - fix weird coloring on mobile
+  - fix tail
+    - bad rotation
+    - missed loops
+    - 

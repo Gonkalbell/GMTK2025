@@ -46,15 +46,9 @@ path_continuous_u = true
 path_u_distance = 1.0
 path_joined = false
 
-[node name="NewPathPointTimer" type="Timer" parent="Path3D"]
-wait_time = 0.2
-autostart = true
-
 [node name="CameraOrigin" type="Node3D" parent="."]
 unique_name_in_owner = true
 
 [node name="Camera" type="Camera3D" parent="CameraOrigin"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 10, 8)
-
-[connection signal="timeout" from="Path3D/NewPathPointTimer" to="." method="_on_new_path_point_timer_timeout"]

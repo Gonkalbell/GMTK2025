@@ -26,3 +26,11 @@ static func random_point_on_fibonacci_sphere(samples = 200) -> Vector3:
 	var x = cos(theta) * radius
 	var z = sin(theta) * radius
 	return Vector3(x, y, z)
+
+## I'm surprised this isn't actually a function that Path3D provides
+static func get_curve3d_point_positions(curve: Curve3D) -> PackedVector3Array:
+	var result = PackedVector3Array()
+	result.resize(curve.point_count)
+	for i in curve.point_count:
+		result[i] = curve.get_point_position(i)
+	return result
