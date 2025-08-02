@@ -5,7 +5,6 @@ extends Node3D
 @export var bonus_speed_modifier: float = 1.0;
 ## We use this angle (in turns) to find the path's maximum arc length relative to the radius of the planet.
 @export var max_path_arc_angle: float = 0.95
-@export var planet: Node3D
 
 var speed_bonus: float = 0.0
 var speed_timer: float = 0.0
@@ -22,8 +21,8 @@ func _ready() -> void:
 	curve.add_point(%TailStart.global_position)
 
 func _process(delta: float) -> void:
-	var planet_origin: Vector3 = planet.global_position
-	var planet_radius: float = planet.scale.x
+	var planet_origin: Vector3 = %Planet.global_position
+	var planet_radius: float = %Planet.scale.x
 
 	var up_dir_old: Vector3 = (%Player.global_position - planet_origin).normalized()
 	var forward_dir_old: Vector3 = (-%Player.global_basis.z).slide(up_dir_old).normalized()
@@ -68,7 +67,7 @@ func _process(delta: float) -> void:
 		curve.set_point_position(curve.point_count - 1, %TailStart.global_position)
 
 func _on_new_path_point_timer_timeout() -> void:
-	var radius: float = planet.scale.x
+	var radius: float = %Planet.scale.x
 	var curve: Curve3D = %Path3D.curve
 	# Detect if our path made a loop
 	if curve.point_count > 1:

@@ -1,4 +1,4 @@
-extends Node2D
+extends Node3D
 
 @export var game_scene:PackedScene
 @export var settings_scene:PackedScene

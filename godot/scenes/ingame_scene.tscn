@@ -25,19 +25,28 @@ glow_enabled = true
 [node name="IngameScene" type="Node3D"]
 script = ExtResource("1_objyc")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+[node name="StaticEnvironment" type="Node3D" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="StaticEnvironment"]
+transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866026, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
-[node name="FillLight" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.211356, -0.273474, -0.938371, 0.887045, 0.349507, -0.301657, 0.410461, -0.896134, 0.168714, 0, 0, 0)
+[node name="FillLight" type="DirectionalLight3D" parent="StaticEnvironment"]
+transform = Transform3D(-0.211356, -0.273474, -0.938371, 0.887046, 0.349506, -0.301654, 0.410461, -0.896135, 0.168714, 0, 0, 0)
 light_color = Color(1, 1, 0.501961, 1)
 light_energy = 0.2
 light_indirect_energy = 0.2
 light_volumetric_fog_energy = 0.2
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="StaticEnvironment"]
 environment = SubResource("Environment_5jhce")
+
+[node name="Planet" type="Node3D" parent="StaticEnvironment"]
+unique_name_in_owner = true
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+
+[node name="Root Scene" parent="StaticEnvironment/Planet" instance=ExtResource("6_5jhce")]
+transform = Transform3D(0.361045, 0.0780462, -0.387015, -0.213409, 0.479802, -0.102331, 0.332156, 0.223437, 0.354927, 0, 0, 0)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -60,16 +69,8 @@ theme = SubResource("Theme_2577t")
 text = "Time: %s
 Score: %s"
 
-[node name="Player" parent="." node_paths=PackedStringArray("planet") instance=ExtResource("7_vus8m")]
+[node name="Player" parent="." instance=ExtResource("7_vus8m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
-planet = NodePath("../Planet")
-
-[node name="Planet" type="Node3D" parent="."]
-unique_name_in_owner = true
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
-
-[node name="Root Scene" parent="Planet" instance=ExtResource("6_5jhce")]
-transform = Transform3D(0.535, 0, 0, 0, 0.535, 0, 0, 0, 0.535, 0, 0, 0)
 
 [node name="GameManager" type="Node3D" parent="."]
 script = ExtResource("5_2577t")

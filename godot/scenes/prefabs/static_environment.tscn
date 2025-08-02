@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://b6tucr045ugek"]
+
+[ext_resource type="Texture2D" uid="uid://cq6lxyd0vvd2e" path="res://art/panorama_image.png" id="1_8abs2"]
+[ext_resource type="PackedScene" uid="uid://7qhicg16pnj3" path="res://art/Planet-IVnmauIgWX.glb" id="2_fwqf4"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_5jhce"]
+panorama = ExtResource("1_8abs2")
+
+[sub_resource type="Sky" id="Sky_vus8m"]
+sky_material = SubResource("PanoramaSkyMaterial_5jhce")
+
+[sub_resource type="Environment" id="Environment_5jhce"]
+background_mode = 2
+sky = SubResource("Sky_vus8m")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="StaticEnvironment" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866026, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="FillLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.211356, -0.273474, -0.938371, 0.887046, 0.349506, -0.301654, 0.410461, -0.896135, 0.168714, 0, 0, 0)
+light_color = Color(1, 1, 0.501961, 1)
+light_energy = 0.2
+light_indirect_energy = 0.2
+light_volumetric_fog_energy = 0.2
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5jhce")
+
+[node name="Planet" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+
+[node name="Root Scene" parent="Planet" instance=ExtResource("2_fwqf4")]
+transform = Transform3D(0.535, 0, 0, 0, 0.535, 0, 0, 0, 0.535, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.996195, 0.0871557, 0, -0.0871557, 0.996195, 0, 5, 25)
