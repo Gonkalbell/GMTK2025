@@ -4,7 +4,7 @@
 
 My entry for https://itch.io/jam/gmtk-2025
 
-You can play this game right now at https://gonkalbell.itch.io/gmtk2025
+You can play this game right now at https://gonkalbell.itch.io/orbit
 
 It's also hosted on github pages: https://gonkalbell.github.io/GMTK2025/
 
