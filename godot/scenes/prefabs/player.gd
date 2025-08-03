@@ -76,8 +76,13 @@ func _detect_loop():
 	var curve: Curve3D = %Path3D.curve
 	if curve.point_count <= 3:
 		return
-	var tail_pos = %TailStart.global_position
-	var prev_pos = curve.get_point_position(curve.point_count - 2)
+	var tail_pos: Vector3 = %TailStart.global_position
+	var prev_pos: Vector3 = curve.get_point_position(curve.point_count - 2)
+
+	# BUGFIX: limit the length of this segment or else the tail will sometimes detect false positives
+	var limited_tail = (prev_pos - tail_pos).limit_length(1.95 * path_max_segment_length)
+	prev_pos = tail_pos + limited_tail
+
 	var points = Util.get_curve3d_point_positions(curve).slice(0, -3)
 	var intersection = Util.segment_curve_intersect3d(prev_pos, tail_pos, points)
 	if intersection != null:
