@@ -1,14 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://bemaa4slumja3"]
+[gd_scene load_steps=5 format=3 uid="uid://bemaa4slumja3"]
 
 [ext_resource type="Script" uid="uid://dj532gayoo5ja" path="res://scenes/prefabs/player.gd" id="1_g2els"]
 [ext_resource type="PackedScene" uid="uid://s70ipmqr0ye5" path="res://art/Spaceship.glb" id="2_tou0u"]
 
 [sub_resource type="Curve3D" id="Curve3D_dqkch"]
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.1, 0, 0, 0, 0, 0, 0, 0, 0, 0.2),
+"points": PackedVector3Array(0, 0, -1.4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.1, 0, 0, 0, 0, 0, 0, 0, 0, 0.2),
 "tilts": PackedFloat32Array(0, 0, 0)
 }
 point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tou0u"]
+albedo_color = Color(0.25, 0.75, 1, 1)
+emission_enabled = true
+emission = Color(0.533333, 0.866667, 1, 1)
+disable_receive_shadows = true
 
 [node name="Player" type="Node3D"]
 script = ExtResource("1_g2els")
@@ -33,11 +39,11 @@ curve = SubResource("Curve3D_dqkch")
 
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="Path3D"]
 cast_shadow = 0
-polygon = PackedVector2Array(-0.1, -0.5, -0.1, 0, 0.1, 0, 0.1, -0.5)
+polygon = PackedVector2Array(0.1, 0, 0.0866, -0.05, 0.05, -0.0866, 0, -0.1, -0.05, -0.0866, -0.0866, -0.05, -0.1, 0, -0.0866, 0.05, -0.05, 0.0866, 0, 0.1, 0.05, 0.0866, 0.0866, 0.05)
 mode = 2
 path_node = NodePath("..")
 path_interval_type = 0
-path_interval = 2.0
+path_interval = 0.25
 path_simplify_angle = 3.0
 path_rotation = 2
 path_rotation_accurate = false
@@ -45,6 +51,7 @@ path_local = true
 path_continuous_u = true
 path_u_distance = 1.0
 path_joined = false
+material = SubResource("StandardMaterial3D_tou0u")
 
 [node name="CameraOrigin" type="Node3D" parent="."]
 unique_name_in_owner = true

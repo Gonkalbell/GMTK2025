@@ -1,11 +1,11 @@
 extends Node3D
 
-@export var move_speed: float = 6
+@export var move_speed: float = 8
 @export var turn_speed: float = 0.5
 @export var bonus_speed_modifier: float = 1.0;
 ## We use this angle (in turns) to find the path's maximum arc length relative to the radius of the planet.
 @export var max_path_arc_angle: float = 0.98
-@export var path_max_segment_length: float = 0.2
+@export var path_max_segment_length: float = 0.5
 
 var speed_bonus: float = 0.0
 var speed_timer: float = 0.0
@@ -66,19 +66,22 @@ func _process(delta: float) -> void:
 	var curve: Curve3D = %Path3D.curve
 	var tail_pos = %TailStart.global_position
 	if curve.point_count >= 2 and curve.get_point_position(curve.point_count - 2).distance_to(tail_pos) < path_max_segment_length:
-		curve.set_point_position(curve.point_count - 1, %TailStart.global_position)
+		curve.set_point_position(curve.point_count - 1, tail_pos)
 	else:
-		if curve.point_count >= 2:
-			_detect_loop()
-		curve.add_point(tail_pos)
+		_detect_loop()
+		var tail_forward = -%TailStart.global_basis.z
+		curve.add_point(tail_pos, -0.1 * path_max_segment_length * tail_forward, 0.1 * path_max_segment_length * tail_forward)
 		while curve.get_baked_length() > max_path_arc_angle * TAU * planet_radius:
 			curve.remove_point(0)
 
+
 func _detect_loop():
 	var curve: Curve3D = %Path3D.curve
+	if curve.point_count <= 2:
+		return
 	var tail_pos = %TailStart.global_position
-	var prev_pos = curve.get_point_position(curve.point_count - 1)
-	var points = Util.get_curve3d_point_positions(curve).slice(0, -1)
+	var prev_pos = curve.get_point_position(curve.point_count - 2)
+	var points = Util.get_curve3d_point_positions(curve).slice(0, -2)
 	var intersection = Util.segment_curve_intersect3d(prev_pos, tail_pos, points)
 	if intersection != null:
 		var intersection_index = intersection["index"]
