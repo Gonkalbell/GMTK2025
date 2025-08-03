@@ -6,6 +6,8 @@ extends Node2D
 func _ready():
 	overlay.on_complete_fade_out.connect(_on_fade_overlay_on_complete_fade_out)
 	return_button.pressed.connect(_on_return_button_pressed)
+	if %FinalScoreLabel != null:
+		%FinalScoreLabel.text = "Final Score: %d\nTotal Playtime: %d seconds" % [GlobalStats.score, GlobalStats.total_playtime]
 	
 	overlay.visible = true
 	return_button.grab_focus()

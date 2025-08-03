@@ -1,7 +1,7 @@
 [gd_resource type="Theme" load_steps=34 format=3 uid="uid://6shp5ck1tnja"]
 
 [ext_resource type="Texture2D" uid="uid://d00ws7wljnit4" path="res://ui/FlatUI4/UIpack_vector.svg" id="1"]
-[ext_resource type="FontFile" path="./kenvector_future.ttf" id="2"]
+[ext_resource type="FontFile" uid="uid://bqw2d4hecgmfj" path="res://ui/FlatUI4/kenvector_future.ttf" id="2"]
 
 [sub_resource type="FontFile" id="31"]
 fallbacks = Array[Font]([ExtResource("2")])
@@ -11,6 +11,16 @@ cache/0/16/0/underline_position = 0.0
 cache/0/16/0/underline_thickness = 0.0
 cache/0/16/0/scale = 1.0
 cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/28/0/ascent = 0.0
+cache/0/28/0/descent = 0.0
+cache/0/28/0/underline_position = 0.0
+cache/0/28/0/underline_thickness = 0.0
+cache/0/28/0/scale = 1.0
+cache/0/8/0/ascent = 0.0
+cache/0/8/0/descent = 0.0
+cache/0/8/0/underline_position = 0.0
+cache/0/8/0/underline_thickness = 0.0
+cache/0/8/0/scale = 1.0
 
 [sub_resource type="StyleBoxTexture" id="1"]
 texture = ExtResource("1")

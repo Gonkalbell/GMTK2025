@@ -1,7 +1,5 @@
 extends Node3D
 
-var score = 0
-
 @export var obstacle_scene: PackedScene = preload("res://scenes/prefabs/obstacle.tscn")
 @export var pickup_scene: PackedScene = preload("res://scenes/prefabs/pickup.tscn")
 
@@ -12,13 +10,15 @@ var pickup_map: Dictionary[Vector3, Node3D] = {}
 
 func _ready() -> void:
 	max_time_limit = %TimeLimit.wait_time
+	GlobalStats.reset()
 	for i in 5:
 		spawn_pickup.call_deferred()
 	for i in 5:
 		spawn_obstacle.call_deferred()
 
-func _process(_delta: float) -> void:
-	%HUD.text = "Time: %d\nScore: %s" % [%TimeLimit.time_left, score]
+func _process(delta: float) -> void:
+	%HUD.text = "Time: %d\nScore: %s" % [%TimeLimit.time_left, GlobalStats.score]
+	GlobalStats.total_playtime += delta
 
 func _on_spawn_timer_timeout() -> void:
 	spawn_obstacle()
@@ -107,7 +107,7 @@ func _on_player_completed_loop(points: PackedVector3Array) -> void:
 			else:
 				new_points += 1
 				total_points += new_points
-				score += new_points
+				GlobalStats.score += new_points
 				var new_time_limit = min(%TimeLimit.time_left + new_points, max_time_limit)
 				%TimeLimit.start(new_time_limit)
 				Notification.spawn_score(self, 1.1 * pos, new_points)

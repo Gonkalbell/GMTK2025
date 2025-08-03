@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 UserSettings="*res://settings/user_settings.gd"
+GlobalStats="*res://global_stats.gd"
 
 [debug_draw_3d]
 

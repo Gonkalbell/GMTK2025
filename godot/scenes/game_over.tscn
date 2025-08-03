@@ -21,10 +21,17 @@ layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="SettingsLabel" type="Label" parent="UI/CenterContainer/VBoxContainer"]
+[node name="GameOverLabel" type="Label" parent="UI/CenterContainer/VBoxContainer"]
 layout_mode = 2
 theme_type_variation = &"HeaderLarge"
 text = "Game Over"
+horizontal_alignment = 1
+
+[node name="FinalScoreLabel" type="Label" parent="UI/CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Final Score: %d
+Total Playtime: %d seconds"
 horizontal_alignment = 1
 
 [node name="ReturnButton" type="Button" parent="UI/CenterContainer/VBoxContainer"]
