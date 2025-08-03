@@ -24,22 +24,21 @@
     - ~~Obstacles~~
     - ~~Background~~
   - Music
-    - Menu
+    - ~~Menu~~
     - Game Over
-    - Gameplay
+    - ~~Gameplay~~
   - SFX
-    - get pickup
-    - invalid loop
+    - ~~get pickup~~
+    - ~~invalid loop~~
     - empty loop?
   - UI
     - ~~Font~~
-    - Buttons
-    - Sliders
+    - ~~Buttons~~
+    - ~~Sliders~~
   - Itch.io Page
 - Bug
-  - fix shadow flickering
+  - ~~fix shadow flickering~~
   - fix weird coloring on mobile
-  - fix tail
-    - bad rotation
-    - missed loops
-    - 
+  - ~~fix tail~~
+    - ~~bad rotation~~
+    - ~~missed loops~~
