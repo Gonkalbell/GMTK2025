@@ -2,13 +2,12 @@ extends Node3D
 
 @export var move_speed: float = 8
 @export var turn_speed: float = 0.5
-@export var bonus_speed_modifier: float = 1.0;
+@export var max_speed_bonus: float = 8;
 ## We use this angle (in turns) to find the path's maximum arc length relative to the radius of the planet.
 @export var max_path_arc_angle: float = 0.98
 @export var path_max_segment_length: float = 0.5
 
 var speed_bonus: float = 0.0
-var speed_timer: float = 0.0
 
 signal completed_loop(points: PackedVector3Array)
 
@@ -41,13 +40,8 @@ func _process(delta: float) -> void:
 		if dir_to_mouse.length_squared() > 0.001:
 			yaw_input = view_dir.angle_to(dir_to_mouse)
 
-	speed_timer -= delta;
-	if speed_timer < 0:
-		speed_bonus = 0
-		speed_timer = 0
-
 	%Player.rotate_object_local(Vector3.UP, TAU * -yaw_input * delta * turn_speed)
-	%Player.translate_object_local(Vector3.FORWARD * delta * (move_speed + speed_bonus * bonus_speed_modifier))
+	%Player.translate_object_local(Vector3.FORWARD * delta * (move_speed + speed_bonus))
 
 	var up_dir: Vector3 = (%Player.global_position - planet_origin).normalized()
 	var forward_dir: Vector3 = (-%Player.global_basis.z).slide(up_dir).normalized()
@@ -65,7 +59,10 @@ func _process(delta: float) -> void:
 
 	var curve: Curve3D = %Path3D.curve
 	var tail_pos = %TailStart.global_position
-	if curve.point_count >= 2 and curve.get_point_position(curve.point_count - 2).distance_to(tail_pos) < path_max_segment_length:
+	var segment_length = path_max_segment_length
+	if curve.point_count >= 2:
+		segment_length = curve.get_point_position(curve.point_count - 2).distance_to(tail_pos)
+	if segment_length < path_max_segment_length:
 		curve.set_point_position(curve.point_count - 1, tail_pos)
 	else:
 		_detect_loop()
@@ -77,11 +74,11 @@ func _process(delta: float) -> void:
 
 func _detect_loop():
 	var curve: Curve3D = %Path3D.curve
-	if curve.point_count <= 2:
+	if curve.point_count <= 3:
 		return
 	var tail_pos = %TailStart.global_position
 	var prev_pos = curve.get_point_position(curve.point_count - 2)
-	var points = Util.get_curve3d_point_positions(curve).slice(0, -2)
+	var points = Util.get_curve3d_point_positions(curve).slice(0, -3)
 	var intersection = Util.segment_curve_intersect3d(prev_pos, tail_pos, points)
 	if intersection != null:
 		var intersection_index = intersection["index"]
@@ -90,11 +87,12 @@ func _detect_loop():
 		curve.add_point(intersection["point"])
 		completed_loop.emit(loop_points)
 
-
-func _on_game_manager_points_gained(points: float, total_points: float) -> void:
-	speed_bonus += points
-	speed_timer += total_points
+func _on_game_manager_points_gained(points: float, _total_points: float) -> void:
+	speed_bonus = lerp(speed_bonus, max_speed_bonus, clampf(points / 10, 0, 1))
+	%SpeedBoostTimer.start(points)
 
 func _on_game_manager_fucked_up() -> void:
 	speed_bonus = 0
-	speed_timer = 0
+
+func _on_speed_boost_timer_timeout() -> void:
+	speed_bonus = 0

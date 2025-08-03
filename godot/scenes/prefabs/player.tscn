@@ -33,6 +33,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0.5)
 
+[node name="SpeedBoostTimer" type="Timer" parent="Player"]
+unique_name_in_owner = true
+one_shot = true
+
 [node name="Path3D" type="Path3D" parent="."]
 unique_name_in_owner = true
 curve = SubResource("Curve3D_dqkch")
@@ -59,3 +63,5 @@ unique_name_in_owner = true
 [node name="Camera" type="Camera3D" parent="CameraOrigin"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 10, 8)
+
+[connection signal="timeout" from="Player/SpeedBoostTimer" to="." method="_on_speed_boost_timer_timeout"]
