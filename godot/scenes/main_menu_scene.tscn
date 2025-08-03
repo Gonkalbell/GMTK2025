@@ -60,9 +60,16 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/margin_top = 10
 
-[node name="Label" type="Label" parent="UI/CenterContainer/VBoxContainer/Credits"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/CenterContainer/VBoxContainer/Credits"]
 layout_mode = 2
-text = "By John Michael Bell"
+
+[node name="Label" type="Label" parent="UI/CenterContainer/VBoxContainer/Credits/VBoxContainer"]
+layout_mode = 2
+text = "By John Michael Bell
+
+Art From:
+https://quaternius.com/
+https://www.kenney.nl/"
 label_settings = SubResource("LabelSettings_2ikbh")
 horizontal_alignment = 1
 

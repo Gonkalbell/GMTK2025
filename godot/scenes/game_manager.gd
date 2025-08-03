@@ -115,8 +115,11 @@ func _on_player_completed_loop(points: PackedVector3Array) -> void:
 
 	if looped_any_obstacles:
 		fucked_up.emit()
-	else:
+		%ErrorSound.play()
+
+	elif new_points > 0:
 		points_gained.emit(new_points, total_points)
+		%PointSound.play()
 
 func _on_time_limit_timeout() -> void:
 	%FadeOverlay.fade_out()
