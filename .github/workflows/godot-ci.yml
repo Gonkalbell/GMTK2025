@@ -8,7 +8,7 @@ env:
 jobs:
   import-assets:
     runs-on: ubuntu-latest
-    container: barichello/godot-ci:4.4
+    container: barichello/godot-ci:4.4.1
     steps:
       - uses: actions/checkout@v4
       - name: Cache import assets
@@ -28,6 +28,8 @@ jobs:
         with:
           path: .godot/imported/
           key: import-assets-${{ runner.os }}-${{ github.sha }}
+      - name: Update apt package index
+        run: sudo apt-get update
       - name: install wine
         run: |
           sudo apt install wine64
