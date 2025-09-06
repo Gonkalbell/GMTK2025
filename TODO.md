@@ -5,7 +5,7 @@
   - ~~Don't use DebugDraw3D for getting points (it doesn't show up in release builds)~~
   - ~~Game state (title -> game -> game over)~~
   - Optional stuff
-    - Change player speed over time?
+    - ~~Change player speed over time?~~
     - Make planet grow over time?
     - ~~Mobile / mouse controls?~~
     - spawn pickups / obstacles in waves?
@@ -25,7 +25,7 @@
     - ~~Background~~
   - Music
     - ~~Menu~~
-    - Game Over
+    - ~~Game Over~~
     - ~~Gameplay~~
   - SFX
     - ~~get pickup~~
@@ -38,7 +38,7 @@
   - Itch.io Page
 - Bug
   - ~~fix shadow flickering~~
-  - fix weird coloring on mobile
+  - ~~fix weird coloring on mobile~~
   - ~~fix tail~~
     - ~~bad rotation~~
     - ~~missed loops~~

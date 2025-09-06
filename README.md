@@ -17,6 +17,8 @@ It's also hosted on github pages: https://gonkalbell.github.io/GMTK2025/
 
 ## Credits
 
+- John Michael Bell
+- James Bell: https://github.com/jamescarterbell
 - Skybox generated using https://github.com/wwwtyro/space-3d
 - Models: https://poly.pizza/u/Quaternius
 - UI: https://www.kenney.nl/

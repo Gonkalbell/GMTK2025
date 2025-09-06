@@ -66,7 +66,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="UI/CenterContainer/VBoxContainer/Credits/VBoxContainer"]
 layout_mode = 2
-text = "By John Michael Bell"
+text = "By John Michael Bell And James Bell"
 label_settings = SubResource("LabelSettings_2ikbh")
 horizontal_alignment = 1
 
